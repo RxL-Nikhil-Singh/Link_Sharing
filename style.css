@@ -3,6 +3,14 @@ body{
     background-color: #EFFFFD;
 }
 
+#logo{
+    position:fixed;
+    right:2%;
+    bottom:2%;
+    height:5%;
+    width:5%;
+}
+
 .table1{
     border:black solid 2px;
     border-radius:10%;
