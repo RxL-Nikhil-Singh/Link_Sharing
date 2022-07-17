@@ -7,6 +7,7 @@ body{
     border:black solid 2px;
     border-radius:10%;
     background-color: #B8FFF9;
+    border-radius: 10px;
 }
 
 td{
@@ -42,3 +43,14 @@ background-color: #EFEAD8;
 
 .right-align{
     float:right;
+}
+
+.inline
+{
+    display:inline;
+}
+
+.register{
+    position:relative;
+    bottom:150px;
+}

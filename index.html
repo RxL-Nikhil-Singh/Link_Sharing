@@ -76,21 +76,21 @@
 
 
 <div class="col-5" >
-    
+    <form action="/action_page.php">
         <table class="card table ">
             <thead ><strong>Login</strong></thead>
             <tbody>
                 <tr class="hover-dark">
                     <td>
-                       <p> Email/UserName *                               
+                       <label for="email">Email/UserName* &nbsp;</label>                             
 
-                        <input type="text" class="login-section-right" class="right-align"></p>
+                        <input type="email" class="login-section-right" class="right-align"></p>
                     </td>
                 </tr>
                 <tr class="hover-dark">
                     <td>
-                        Password *
-                        <input type="text" class="right-align" >
+                        <label for="password">Password *</label> 
+                        <input type="password" class="right-align" >
                     </td>
                 </tr>
 
@@ -102,12 +102,13 @@
                 </tr>
             </tbody>
         </table>
-    
+    </form>
 </div>
 
 <!--section 2-->
 
 <div class="col-6">
+    <form action="/action_page.php">
     <table class="card table ">    
         
             <thead ><strong>Top Posts</strong>
@@ -139,25 +140,25 @@
             </tbody>
     </table>
     
-
+    </form>
 </div>
 
 
 
-<div class="col-5" >
+<div class="col-5 register"  >
     
         <table class="card table ">
             <thead ><strong>Register</strong></thead>
             <tbody>
                 <tr class="hover-dark">
                     <td>
-                       <p> First Name *       
+                       <p><label for="first name">First Name *</label>        
                         <input class="right-align" type="text" class="login-section-right"></p>
                     </td>
                 </tr>
                 <tr class="hover-dark">
                     <td>
-                        <p> Last  Name *       
+                        <p> <label for="Last Name">Last name*</label>     
                             <input type="text"class="right-align" class="login-section-right"></p>
                     </td>
                 </tr>
@@ -165,27 +166,27 @@
                 <tr class="hover-dark">
                     <td>
                         <p> Email *       
-                            <input type="text" class="right-align" class="login-section-right"></p>
+                            <input type="email" class="right-align" class="login-section-right"></p>
                     </td>
                 </tr>
 
                 <tr class="hover-dark">
                     <td>
-                        <p> Username *       
-                            <input type="text" class="right-align" class="login-section-right"></p>
+                        <p> <label for="username">Username*</label>        
+                            <input type="text" class="right-align"  class="login-section-right"></p>
                     </td>
                 </tr>
 
                 <tr class="hover-dark">
                     <td>
-                        <p> Password *       
-                            <input type="text" class="right-align" class="login-section-right"></p>
+                        <p> <label for="password">Password*</label>       
+                            <input type="password" class="right-align" class="login-section-right"></p>
                     </td>
                 </tr>
                 
                 <tr class="hover-dark">
                     <td>
-                        <p> Confirm Password * &nbsp;       
+                        <p>  <label for="confirm password">Confirm Password*</label>  &nbsp;       
                             
                             <input type="text" class="login-section-right"></p>
                     </td>
@@ -193,10 +194,10 @@
 
                 <tr class="hover-dark">
                     <td>
-                        Photo * &nbsp;
+                       <label for="photo">Photo*</label>  &nbsp;
                         <input type="text" class="right-align">
                         
-                        <button  type="button" onclick="" style="50px" >Browse</button> 
+                        <input type="file" id="myFile" name="filename"> 
                     </td>
                 </tr>
                 
