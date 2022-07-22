@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/favicon.ico" />
     
-<script src="https://kit.fontawesome.com/92dceba73a.js" crossorigin="anonymous"></script>
+
     <!--bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
@@ -19,15 +19,37 @@
 
 <body>
 
-    <img src="images/rxl-removebg-preview.png" alt="LOGO" id="logo">
-    <H3>Home</H3>
+    <H2>Home</H2>
+    <nav class="navbar navbar-expand-lg nav" >
+        <div class="container-fluid">
+          <a  href="https://nikhiliitbhu.github.io/Personal_Website/">Link Sharing</a>
 
-    <table class="table1 table table-hover table-responsive table-bordered ">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=
+          "#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"     
+          aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            </ul>
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit"><i class=" fa-solid fa-magnifying-glass"> </i></button>
+            </form>
+          </div>
+        </div>
+    </nav>
+
+
+
+      <img src="images/rxl-removebg-preview.png" alt="LOGO" id="logo">
+    
+
+    <!-- <table class="table1 table table-hover table-responsive table-bordered ">
         <tr>
             <td ><a href="https://nikhiliitbhu.github.io/Personal_Website/">Link Sharing</a></td>
             <td align="right"><input type="text" placeholder="Search.."></td>
         </tr>
-    </table>
+    </table> -->
 
 <div class="col-6">
     <table class="card table ">    
@@ -36,9 +58,9 @@
             <tbody>
                 <tr class="hover-dark">
                     <td>
-                        <div class="">
+                        <div style="width:97%" class="">
                             <img class="img1" src="https://i.pinimg.com/originals/e6/74/ce/e674ce0d8ccf9a58ad014c2632b59a74.jpg" alt="profile pic">
-                            <strong>Krishna </strong>&nbsp;
+                            <strong>Krishna </strong>
                             <a href="https://www.instagram.com/mayapur_paradise/?hl=en" style="font-weight:lighter">@Krishna</a>
                             
                             <p>Krishna is the Supreme Personality of Godhead. </p>
@@ -78,10 +100,10 @@
 
 <div class="col-5" >
     <form action="/action_page.php">
-        <table class="card table ">
+        <table class="card  table" style="width:97%;">
             <thead ><strong>Login</strong></thead>
             <tbody>
-                <tr class="hover-dark">
+                <tr class="hover-dark" style="width:90%;">
                     <td>
                        <label for="email">Email/UserName* &nbsp;</label>                             
 
@@ -108,7 +130,7 @@
 
 <!--section 2-->
 
-<div class="col-6">
+<div class="container col-6">
     <form action="/action_page.php">
     <table class="card table ">    
         
@@ -133,10 +155,6 @@
                             <a href="" class="right-align">view post</a>
                         </div>                                  
                     </td>
-                </tr>
-
-                
-                    
                 </tr>
             </tbody>
     </table>
@@ -189,7 +207,7 @@
                     <td>
                         <p>  <label for="confirm password">Confirm Password*</label>  &nbsp;       
                             
-                            <input type="text" class="login-section-right"></p>
+                            <input type="password" class="login-section-right"></p>
                     </td>
                 </tr>
 
