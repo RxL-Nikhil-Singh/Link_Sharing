@@ -1,0 +1,264 @@
+/*
+* This is a manifest file that'll be compiled into application.css, which will include all the files
+* listed below.
+*
+* Any CSS file within this directory can be referenced here using a relative path.
+*
+* You're free to add application-wide styles to this file and they'll appear at the top of the
+* compiled file, but it's generally better to create a new file per style scope.
+*
+*= require bootstrap
+*= require grails
+*= require main
+*= require mobile
+*= require_self
+*/
+
+body{
+    /*background-image: url("");*/
+    height: 80rem;
+    /*margin: 0 0 0 0rem;*/
+}
+
+
+#universal-div{
+    margin:2rem 0 2rem 2rem;
+}
+
+
+#logo2{
+    width:5rem;
+    height:5rem;
+
+}
+
+#logo2:hover{
+    animation: shake 0.5s;
+    animation-iteration-count: infinite;
+}
+
+.nav1
+{
+    /*background-color:deeppink;*/
+    background-image: url("https://i.pinimg.com/originals/82/2a/fc/822afc5b6d4864bc0fa943e795e539fa.gif");
+    /* border-radius: 10px; */
+    padding:0;
+
+}
+
+td{
+    padding: 5px;
+    height:fit-content;
+}
+
+
+
+
+div{
+    display:inline-block;
+    /* margin: 20px 0; */
+    /* overflow: scroll; */
+     border-radius: 10px;
+}
+
+.img1{
+    display:inline-block;
+    border-radius:50%;
+    width:100px;
+    height:100px;
+    float:left;
+    margin-right:10px;
+    border:solid black 1px;
+}
+
+
+
+
+.right-align{
+
+    margin-left:50%;
+    text-align: center;
+
+}
+
+.icon{
+    width:1.3em;
+    height:1.3em;
+    margin:0 0.2em;
+    /*   */
+
+}
+
+.icon:hover{
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yb/r/EkpT01GcNDm.png');
+}
+
+.searchIcon:hover{
+    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yb/r/EkpT01GcNDm.png');
+
+}
+
+
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+
+.scroller{
+
+    overflow: scroll;
+    /* width: 700px; */
+    height:350px;
+}
+
+
+.customTable{
+    width:100%;
+    /* border: solid black 1px; */
+
+    /* border: 1px solid rgba(0, 0, 0, 0.125); */
+    border-radius: 20px;
+    /*padding-left: 1rem;*/
+}
+
+
+.customHead{
+    background-image:url('https://i.pinimg.com/originals/82/2a/fc/822afc5b6d4864bc0fa943e795e539fa.gif');
+    color:white;
+    /*border:solid black;*/
+    font-family:cursive;
+    font-size:x-large;
+    text-align:center;
+}
+
+.customContainer{
+    margin:0 0 3rem 0;
+    border-radius:10px
+}
+
+.hover-dark:hover{
+    background: url('https://image.shutterstock.com/image-illustration/faint-soft-rainbow-colors-background-260nw-2153653689.jpg');
+}
+
+tr:nth-child(even) {
+    background-image: url('https://scontent.fdel3-4.fna.fbcdn.net/v/t39.30808-6/301578665_106249275524771_3318989122480880571_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_ohc=X6g8Qi20o4UAX8Y-v7G&_nc_ht=scontent.fdel3-4.fna&oh=00_AT8OuZg7ctla5jrHfA-DOw6TdpFeYpbDMGrgCTQoXIovLg&oe=630E8725');
+    /*background-image: linear-gradient(red, yellow);*/
+    /*background-color:yellow;*/
+}
+
+tr:nth-child(odd) {
+    background-image: url('https://scontent.fdel3-4.fna.fbcdn.net/v/t39.30808-6/301680016_106249328858099_2226816888015366071_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=730e14&_nc_ohc=3FdtZAxbvKEAX_ms2ei&_nc_ht=scontent.fdel3-4.fna&oh=00_AT-5bOIb5AiSvE48aKVnuJXdK4Z89_5EeaBw90izRhUckg&oe=630ED289');
+}
+
+
+.innerTable{
+    margin:1em 0;
+    border: solid 1px black;
+}
+
+.innerCell{
+    text-align:center;
+    font-weight: bold;
+    /*background-color:#dddddd;*/
+}
+
+.inbox{
+    position:relative;
+    left:4.5rem;
+    top:3rem;
+}
+
+.trendingTopics{
+    position:relative;
+    left:4rem;
+    top:2rem;
+}
+
+.subscriptions{
+    position:relative;
+    bottom:8rem;
+}
+
+.checked {
+    color: orange;
+}
+
+table {
+    padding: 0px;
+    border-collapse:separate;
+    border:solid black 0px;
+    border-radius:6px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+td, th {
+    border-left:solid black 1px;
+    border-top:solid black 1px;
+}
+
+th {
+    background-color: blue;
+    border-top: none;
+}
+
+td:first-child, th:first-child {
+    border-left: none;
+}
+
+
+#topPosts{
+    position:absolute;
+    top:37rem;
+    margin-left:2rem;
+}
+
+#recentSearches{
+    position:absolute;
+    top:8rem;
+    left: 2rem;
+}
+
+#loginPanel{
+    position: absolute;
+    right:3rem;
+    top:12rem;
+}
+
+
+#registerPanel{
+    display: none;
+    position: absolute;
+    right:3rem;
+    top:12rem;
+}
+
+.viewPost{
+    position:relative;
+    left:20rem;
+}
+
+.thead-hover:hover{
+    color:black;
+}
+
+.timeline{
+    position:relative;
+    left:13rem;
+}
+
+label{
+    font-weight: bold;
+
+}
+
