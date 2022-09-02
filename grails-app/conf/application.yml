@@ -66,8 +66,8 @@ grails:
     controllers:
         defaultScope: singleton
         upload:
-            maxFileSize: 6000000
-            maxRequestSize: 6000000
+            maxFileSize: 5120000
+            maxRequestSize: 5120000
     converters:
         encoding: UTF-8
     views:
@@ -102,7 +102,7 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: create-drop
+            dbCreate: update
             url: jdbc:oracle:thin:@localhost:1521/orcl
     test:
         dataSource:

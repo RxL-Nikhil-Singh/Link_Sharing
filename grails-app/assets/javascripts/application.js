@@ -28,8 +28,14 @@
 //     }
 // );
 
+setTimeout( function myFunction() {
 
+    $("#flash").html("");
+},5000)
 
+function myFunction2(){
+    $("#flash").html("");
+}
 
 // $("#createTopic").modal("show")
 document.getElementById("registerPanel").style.display="none"

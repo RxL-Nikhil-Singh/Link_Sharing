@@ -9,56 +9,81 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg nav nav1" >
+%{--Navbar--}%
+<nav class="navbar navbar-expand-lg nav nav1">
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><asset:image src="worldwide.png" id="logo2" alt="LOGO"/></a>
-        <a class="navbar-brand" style="margin-right:50%" href="https://nikhiliitbhu.github.io/Personal_Website/"><asset:image src="LINK-SHARING-4-8-2022.png" alt="" width="200%"/></a>
+        <a class="navbar-brand" style="margin-right:50%"
+           href="https://nikhiliitbhu.github.io/Personal_Website/"><asset:image src="LINK-SHARING-4-8-2022.png" alt=""
+                                                                                width="200%"/></a>
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
+            <li class="nav-item">
+                <a class="nav-link" title="Create topic" href="#" data-bs-toggle="modal" data-toggle="modal"
+                   data-target="#createTopic">
+                    <asset:image src="speech-bubble.png" alt="create topic" class="icon "
+                                 style="position:absolute;right:39rem; top:2.5rem;"></asset:image>
+                </a>
+            </li>
 
             <li class="nav-item">
-                <a class="nav-link"title="Create resource" href="#" data-bs-toggle="modal" data-bs-target="#createResource" id="#createResource">
-                    <asset:image src="link.png" alt="create resource" class="icon" style="position:absolute;right:27rem; top:2.5rem;"></asset:image>
+                <a class="nav-link" title="Send Invitation" href="#" data-bs-toggle="modal" data-toggle="modal"
+                   data-target="#sendInvitation">
+                    <asset:image src="email.png" alt="send invitation" class="icon"
+                                 style="position:absolute;right:36rem; top:2.5rem;"></asset:image>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"title="" href="#" data-bs-toggle="modal" data-bs-target="#" id="#note">
-                    <asset:image src="note.png" alt="" class="icon" style="position: absolute; right:24rem; top:2.5rem;"></asset:image>
+                <a class="nav-link" title="create link resource" href="#" data-bs-toggle="modal" data-toggle="modal"
+                   data-target="#createLinkResource">
+                    <asset:image src="link.png" alt="create link resource" class="icon"
+                                 style="position:absolute;right:33rem; top:2.5rem;"></asset:image>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" title="create document resource" href="#" data-bs-toggle="modal" data-toggle="modal"
+                   data-target="#createDocumentResource">
+                    <asset:image src="note.png" alt="create document resource" class="icon"
+                                 style="position: absolute; right:30rem; top:2.5rem;"></asset:image>
                 </a>
             </li>
 
         </ul>
 
 
-
-
-
-
         <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="search-box" size="150">
-            <button class="btn btn-outline-success searchIcon" type="submit"><asset:image src="search.png" alt="serach" class="icon"/></button>
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="search-box"
+                   size="150">
+            <button class="btn btn-outline-success searchIcon" type="submit"><asset:image src="search.png" alt="serach"
+                                                                                          class="icon"/></button>
         </form>
-        <div class="dropdown" style="margin-left:1rem;border-radius: 10px;background-image: url('https://c.tenor.com/6Andtbkh8cwAAAAM/rain-transparent.gif')">
-            <button class="btn  dropdown-toggle " type="button dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                Nikhil
+
+        %{--        //dropdown--}%
+        <div class="dropdown">
+            <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" style="margin:1rem">
+                <asset:image src="me.png" class="icon"/> ${user.firstName}
             </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#"><strong>Profile</strong></a></li>
-                <li><a class="dropdown-item" href="#"><strong>User</strong></a></li>
-                <li><a class="dropdown-item" href="#"><strong>Topic</strong></a></li>
-                <li><a class="dropdown-item" href="#"><Strong>Class</Strong></a></li>
-                <li><a class="dropdown-item" href="#"><Strong>Logout</Strong></a></li>
-            </ul>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="font-weight: bolder">
+                <g:link controller="users" action="editProfile" id=""><asset:image src="me.png"
+                                                                                   class="icon"/>Profile</g:link>
+                <g:link controller="users" action="editProfile" id=""><asset:image src="user.png"
+                                                                                   class="icon"/>Users</g:link>
+                <g:link controller="topics" action="topicShow" id="topicShow"><asset:image src="list.png"
+                                                                                           class="icon"/>Topics</g:link>
+                <g:link controller="users" action="editProfile" id=""><asset:image src="writing.png"
+                                                                                   class="icon"/>Posts</g:link>
+                <g:link controller="users" action="logout" id="logout">
+                    <asset:image src="logout.png" class="icon"/> Logout</g:link>
+
+            </div>
         </div>
-
     </div>
-
 </nav>
 
-
 <div id="universal-div">
-
     <div class="container-fluid col-lg-5 col-md-11 scroller"  >
 
         <table class="customTable  customContainer" >
@@ -77,7 +102,7 @@
                     <table class="innerTable">
 
                         <tr>
-                            <td class="innerCell"> @nikhil</a></td>
+                            <td class="innerCell"> @nikhil</td>
                             <td class="innerCell">Subscriptions</td>
                             <td class="innerCell">Post</td>
                         </tr>

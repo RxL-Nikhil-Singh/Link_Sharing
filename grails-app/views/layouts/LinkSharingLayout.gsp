@@ -43,8 +43,22 @@
 
 <asset:javascript src="application.js"/>
 <asset:javascript src="jquery-3.6.0.js"/>
-%{--<asset:javascript src="jquery-3.2.1.slim.min.js"/>--}%
+<asset:javascript src="jquery-3.2.1.slim.min.js"/>
 <asset:javascript src="bootstrap.js"/>
 <asset:javascript src="bootstrap.min.js"/>
+%{--flash message--}%
+<div id="flash" onmouseenter="myFunction()">
+    <table>
+        <span style="margin:2px;align-content: center"> <asset:image src="bell.gif" class="icon"/>Notification<asset:image src="bell.gif" class="icon"/>
+            <button title="popups auto-disappear in 5seconds" class="btn" onclick="myFunction2()" style="position:relative; left:12rem;">
+            <asset:image src="close.png" class="icon"></asset:image> </button><br><hr>
+        </span>
+
+        <span style="margin:2px; font-family: cursive; color:black;">
+            ${flash.message}
+        </span>
+    </table>
+</div>
+
 </body>
 </html>

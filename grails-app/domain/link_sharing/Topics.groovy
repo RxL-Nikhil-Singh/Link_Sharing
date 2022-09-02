@@ -16,5 +16,5 @@ class Topics {
     }
 
     static belongsTo = [createdBy:Users]
-    static hasMany = [subscriptions:Subscriptions, resource:Resources]
+    static hasMany = [subs:Subscriptions, resource:Resources]
 }

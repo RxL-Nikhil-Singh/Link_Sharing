@@ -8,8 +8,9 @@ class Subscriptions {
     static constraints = {
         dateCreated nullable: true
         topic nullable: false, blank:false
-//        createdBy nullable: false, blank:false
-//        seriousness nullable: false, blank:false
+        seriousness nullable: true
+        user nullable:true
+        topic nullable:true
     }
 
     static belongsTo = [user:Users, topic:Topics]

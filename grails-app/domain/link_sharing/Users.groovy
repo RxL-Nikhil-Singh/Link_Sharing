@@ -29,7 +29,7 @@ class Users {
         photo nullable: true
     }
 
-    static hasMany = [topics:Topics, subscriptions:Subscriptions, resource:Resources, reads:Readings, ratings:Ratings]
+    static hasMany = [topic:Topics, subscription:Subscriptions, resource:Resources, reading:Readings, rating:Ratings]
 
 }
 

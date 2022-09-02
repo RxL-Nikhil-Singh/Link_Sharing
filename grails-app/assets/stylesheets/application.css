@@ -22,7 +22,7 @@ body{
 
 
 #universal-div{
-    margin:2rem 0 2rem 2rem;
+    margin:2rem 2rem 2rem 2rem;
 }
 
 
@@ -76,15 +76,15 @@ div{
 
 .right-align{
 
-    margin-left:50%;
-    text-align: center;
+    margin-left:70%;
+    text-align: right;
 
 }
 
 .icon{
-    width:1.3em;
-    height:1.3em;
-    margin:0 0.2em;
+    width:1.5em;
+    height:1.5em;
+    margin-left:0.5em;
     /*   */
 
 }
@@ -122,6 +122,10 @@ div{
     height:350px;
 }
 
+.bigScroller{
+    overflow: scroll;
+    height:1000px;
+}
 
 .customTable{
     width:100%;
@@ -244,8 +248,7 @@ td:first-child, th:first-child {
 }
 
 .viewPost{
-    position:relative;
-    left:20rem;
+
 }
 
 .thead-hover:hover{
@@ -262,3 +265,19 @@ label{
 
 }
 
+#flash{
+    background-color:#E1FFEE;
+    width:40rem;
+    text-align: center;
+    /*heidht:3rem;*/
+    font-size: large;
+    font-weight: bolder;
+    color:red;
+    position: fixed;
+    right:2rem;
+    bottom:2rem;
+}
+
+.buttonMargin{
+    margin-left:1rem;
+}

@@ -3,9 +3,9 @@ package link_sharing
 class Enums {
 
     static enum Seriousness {
-        CASUAL("C"),
-        SERIOUS("S"),
-        VERY_SERIOUS("V")
+        CASUAL("CASUAL"),
+        SERIOUS("SERIOUS"),
+        VERY_SERIOUS("VERY_SERIOUS")
 
         String name
         Seriousness (String name) {

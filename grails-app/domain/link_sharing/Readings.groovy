@@ -1,7 +1,6 @@
 package link_sharing
 
 class Readings {
-    Users user
     boolean isRead
 
     static constraints = {

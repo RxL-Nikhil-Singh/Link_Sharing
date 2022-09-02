@@ -1,6 +1,6 @@
 package link_sharing
 
 class ReadingsController {
-//    static scaffold = READING_ITEM
+//    static scaffold = Readings
     def index() { }
 }

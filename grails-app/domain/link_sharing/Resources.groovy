@@ -11,6 +11,11 @@ class Resources {
         description nullable: false, blank: false
     }
 
-    static hasMany = [reads:Readings, ratings:Ratings]
+    static hasMany = [reads:Readings, rates:Ratings]
     static belongsTo = [createdBy:Users, topic:Topics]
+
+    static mapping = {
+        tablePerHierarchy true
+    }
+
 }

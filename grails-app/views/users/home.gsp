@@ -9,6 +9,8 @@
 
 <body class="homeBody">
 
+
+
 <nav class="navbar navbar-expand-lg nav nav1" >
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><asset:image src="worldwide.png" id="logo2" alt="LOGO"/></a>
@@ -36,24 +38,28 @@
 
 
 
-        <g:each var="it" in="0..5">
-        <tr class="hover-dark">
-            <td>
+        <g:each in="${resList}">
+            <g:if test="${it.topic.visibility==link_sharing.Enums.Visibility.PUBLIC}">
+            <tr class="hover-dark">
+
+                <td>
                 <div  class="container-fluid">
-                    <asset:image src="krishna.jpg" class="img1" alt="profile pic"></asset:image>
+                    <asset:image src="ProfilePictures/${it.createdBy.photo}" class="img1" alt="profile pic"></asset:image>
 
-                    <strong>Krishna </strong>
-                    <a href="" style="font-weight:lighter">@Krishna</a>
+                    <strong>${it.createdBy.firstName}&nbsp; ${it.createdBy.lastName} </strong>
+                    <a href="" style="font-weight:normal; ">@${it.createdBy.username}</a>
+                    <a href="" style="font-weight:normal;position:absolute;right:3rem;">${it.topic.name}</a>
 
-                    <p>${rec.description} </p>
+                    <p >${it.description} </p>
                     <asset:image src="facebook.png" class="icon" alt="facebook"></asset:image>
                     <asset:image src="instagram.png" class="icon" alt="instagram"></asset:image>
                     <asset:image src="google.png" class="icon" alt="google"></asset:image>
 
-                    <a href="" class="viewPost">view post</a>
+                    <a href="" class="right-align">view post</a>
                 </div>
-            </td>
-        </tr>
+                </td>
+            </tr>
+            </g:if>
         </g:each>
 
         </tbody>
@@ -63,8 +69,8 @@
 </div>
 
 <!-- login  -->
-<button class="btn btn-primary" id="loginBtn"  onclick="loginFunction()" style="position:absolute; top:8rem; right:25rem">Login</button>
-<button class="btn btn-success" id="registerBtn"  onclick="registerFunction()" style="position:absolute; top:8rem; right:12rem">Register</button>
+<button class="btn btn-primary" id="loginBtn"  onclick="loginFunction()" style="position:absolute; top:8rem; right:27rem">Login</button>
+<button class="btn btn-success" id="registerBtn"  onclick="registerFunction()" style="position:absolute; top:8rem; right:14rem">Register</button>
 
 
 
@@ -107,14 +113,7 @@
                 </td>
             </tr>
 
-            <tr class="hover-dark" style="height: min-content">
-                <td colspan="2" style="background-color: transparent">
-                <span style="color:red; font-weight:bolder; font-size:large; text-align:center">
-                    ${flash.message}
-                </span>
-                </td>
 
-            </tr>
 
             </tbody>
         </table>
@@ -122,7 +121,7 @@
 </div>
 
 
-
+%{--Register--}%
 <div class="container-fluid col-5 customContainer right-align  " id="registerPanel">
     <form action="register"  method="post" target="" enctype="multipart/form-data">
         <table class="customTable " >
@@ -179,10 +178,12 @@
 
             <tr class="hover-dark">
                 <td>
-                    <label for="photo">Photo*</label>  &nbsp;
+                    <label for="photo">Photo*</label>
+                    <br>upto 5MBs <br> .jpg, .png, .jpeg
 
 
-                </td><td><input type="file" name="profilePic" class="form-control"/>
+                </td><td><input type="file"  name="profilePic" class="form-control"  accept=".jpg, .jpeg, .png"/>
+
             </td>
             </tr>
 
@@ -195,22 +196,15 @@
 
             </tr>
 
-            <tr class="hover-dark" style="height: min-content">
-                <td colspan="2" style="background-color: transparent">
-                    <span style="color:red; font-weight:bolder; font-size:large; text-align:center">
-                        ${flash.message}
-                    </span>
-                </td>
 
-            </tr>
 
             </tbody>
         </table>
 </form>
 </div>
 
-<!--section 2-->
 
+%{--Top Posts--}%
 <div class="container-fluid col-6 customContainer" id="topPosts" >
     <form action="" >
         <table class="customTable " >
@@ -229,24 +223,39 @@
             </thead>
 
             <tbody>
-            <tr class="hover-dark">
-                <td style="width:100%" colspan="2">
-                    <div class="container-fluid">
-                        <asset:image src="Photograph.jpeg" class="img1" alt="profile pic"></asset:image>
-                        <h5></h5>
-                        <p>Lorem ipsum dolor sit amet, quis in duis, iaculis id felis. Consectetuer vestibulum, nunc urna lectus, erat ligula. </p>
-                        <asset:image src="facebook.png" class="icon" alt="facebook"></asset:image>
-                        <asset:image src="instagram.png" class="icon" alt="instagram"></asset:image>
-                        <asset:image src="google.png" class="icon" alt="google"></asset:image>
-                        <a href="" class="viewPost">view post</a>
-                    </div>
-                </td>
-            </tr>
+            <g:each in="${ratedList}">
+                <g:if test="${it.resource.topic.visibility==link_sharing.Enums.Visibility.PUBLIC}">
+                    <tr class="hover-dark">
+
+                        <td>
+                            <div  class="container-fluid">
+                                <asset:image src="ProfilePictures/${it.resource.createdBy.photo}" class="img1" alt="profile pic"></asset:image>
+
+                                <strong>${it.resource.createdBy.firstName}&nbsp; ${it.resource.createdBy.lastName} </strong>
+                                <a href="" style="font-weight:normal; ">@${it.resource.createdBy.username}</a>
+                                <a href="" style="font-weight:normal;position:absolute;right:3rem;">${it.resource.topic.name}</a>
+
+                                <p >${it.resource.description} </p>
+                                <asset:image src="facebook.png" class="icon" alt="facebook"></asset:image>
+                                <asset:image src="instagram.png" class="icon" alt="instagram"></asset:image>
+                                <asset:image src="google.png" class="icon" alt="google"></asset:image>
+
+                                <a href="" class="right-align">view post</a>
+                            </div>
+                        </td>
+                    </tr>
+                </g:if>
+            </g:each>
             </tbody>
         </table>
 
     </form>
 </div>
+
+
+<asset:javascript src="jquery-3.6.0.js"/>
+<asset:javascript src="jquery-3.2.1.slim.min.js"/>
+
 
 </body>
 </html>
