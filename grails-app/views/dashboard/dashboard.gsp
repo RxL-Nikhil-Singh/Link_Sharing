@@ -117,7 +117,7 @@
                     <div class="modal-body">
                         <tr><td><label for="topic">Select Topic:</label></td>
                             <td><g:select required="required" class="form-control" name="topic" from="${subscriptionList.topic.name}"
-                                          value="${subscriptionList.topic.name.first()}"
+                                          value="${(subscriptionList)?(subscriptionList.topic.name.first()):null}"
                                          /></td></tr>
                     </div>
                 </table>
@@ -164,7 +164,7 @@
 
                     <div class="modal-body">
                         <tr><td><label for="topic">Select Topic:</label></td>
-                            <td><g:select class="form-control" name="topic" from="${subscriptionList.topic.name}" value="${subscriptionList.topic.name.first()}"
+                            <td><g:select class="form-control" name="topic" from="${subscriptionList.topic.name}" value="${(subscriptionList)?(subscriptionList.topic.name.first()):null}"
                                          /></td></tr>
                     </div>
                 </table>
@@ -182,12 +182,14 @@
     </div>
 </div>
 
+
+
 %{--Navbar--}%
 <nav class="navbar navbar-expand-lg nav nav1">
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><asset:image src="worldwide.png" id="logo2" alt="LOGO"/></a>
         <a class="navbar-brand" style="margin-right:50%"
-           href="https://nikhiliitbhu.github.io/Personal_Website/"><asset:image src="LINK-SHARING-4-8-2022.png" alt=""
+           href="http://localhost:7070/users/home"><asset:image src="LINK-SHARING-4-8-2022.png" alt=""
                                                                                 width="200%"/></a>
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -257,6 +259,8 @@
         </div>
     </div>
 </nav>
+
+
 
 <div id="universal-div">
     %{--  User Details--}%
@@ -334,10 +338,14 @@
                                 <asset:image src="facebook.png" class="icon" alt="facebook"></asset:image>
                                 <asset:image src="instagram.png" class="icon" alt="instagram"></asset:image>
                                 <asset:image src="google.png" class="icon" alt="google"></asset:image>
-                                <a href="" style="position: relative; left:3rem;">Download</a>
-                                <a href="" style="position: relative; left:4rem;">view Full Site</a>
-                                <a href="" style="position: relative; left:5rem;">Mark as read</a>
-                                <a href="" style="position: relative; left:6rem;">view post</a>
+                                <a href="" style="margin-left:2rem;">
+                                    Download
+                                </a>
+                                <a href="" style="margin-left:1rem;">view Full Site</a>
+                                <a href="" style="margin-left:1rem;">Mark as read</a>
+                                <g:link params='[resource: "${it.id}"]' style="margin-left:1rem;" controller="resources" action="post">
+                                    view post
+                                </g:link>
                                 </span>
                             </div>
                         </td>
@@ -373,7 +381,7 @@
                     <td style="width:100%;">
 
                     <g:link params='[user:"${top.topic.createdBy.id}",topic: "${top.topic.id}"]' controller="topics" action="topicShow" method="post" >
-                        @${top.topic.name}
+                      <span class="originalTopicName">  @${top.topic.name}</span>
                     </g:link>
 
                         <table class="innerTable">
@@ -437,14 +445,20 @@
                                 </g:link><br>
                         </g:if>
 
-                        <g:if params='[ser: "${link_sharing.Enums.Seriousness.VERY_SERIOUS}"]' test="${!(top.seriousness==link_sharing.Enums.Seriousness.VERY_SERIOUS)}">
-                            😳&nbsp;<g:link params='[subscription: "${top.id}" ,newSerVal: "${link_sharing.Enums.Seriousness.VERY_SERIOUS}"]'  method="post" controller="subscriptions" action="modSeriousness">
-                                 ${link_sharing.Enums.Seriousness.VERY_SERIOUS}
+                                <g:if test="${!(top.seriousness==link_sharing.Enums.Seriousness.VERY_SERIOUS)}">
+                                    😳&nbsp;<g:link params='[subscription:"${top.id}" ,newSerVal: "${link_sharing.Enums.Seriousness.VERY_SERIOUS}"]'  method="post" controller="subscriptions" action="modSeriousness">
+                                    ${link_sharing.Enums.Seriousness.VERY_SERIOUS}
                             </g:link>
                         </g:if>
                             </div>
                         </div>
                     </g:if>
+                        <g:else>
+                            <button class="" type="button" title="You have to be Very Serious for your own topic">
+                                ${top.seriousness}
+                            </button>
+                        </g:else>
+
 
                         <g:if test="${top.topic.createdBy.id==user.id}">
                         %{--                        Visibility--}%
@@ -466,12 +480,21 @@
                             </div>
                         </div>
                         </g:if>
+                        <g:else>
+                            <button class="" type="button" title="Sorry, you are not creator for this topic">
+                                ${top.topic.visibility}
+                            </button>
+                        </g:else>
+
                         <asset:image src="email.png" class="icon" title="send invitation" alt="invite"></asset:image>
 
                     <g:if test="${top.topic.createdBy.id==user.id}">
-
-                        <asset:image src="writing.png" title="edit topic" class="icon" alt="write"></asset:image>
-                        <asset:image src="delete.png" title="delete topic" class="icon" alt="delete"></asset:image>
+                        <g:link params='[topic: "${top.topic.id}"]' controller="topics" action="topicChangeRender">
+                        <asset:image src="writing.png" title="edit topic" class="editTopic icon" alt="write"></asset:image>
+                        </g:link>
+                    <g:link params='[topic: "${top.topic.id}"]' controller="topics" action="deleteConfirmation">
+                        <asset:image src="delete.png" class="deleteTopic icon " title="delete topic" alt="delete"></asset:image>
+                    </g:link>
                     </g:if>
                     </td>
 
@@ -553,33 +576,40 @@
                     </tr>
                 </table>
 
-                        <g:if test="${(it.subs.user.id.contains(user.id))&&(!(it.createdBy.id==user.id))}">
-                        %{--                        Seriousness--}%
-                            <div class="dropdown buttonMargin">
-                                <button class="btn btn-primary dropdown-toggle" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Seriousness
+                        <g:if test="${(it.subs.user.id.contains(user.id))}">
+                            <g:if test="${(!(it.createdBy.id==user.id))}">
+                            %{--                        Seriousness--}%
+                                <div class="dropdown buttonMargin">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        ${subscriptionList[subscriptionList.topic.name.indexOf(it.name)].seriousness}
+                                    </button>
+                                    <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+
+                                        <g:if test="${!(subscriptionList[subscriptionList.topic.name.indexOf(it.name)].seriousness==link_sharing.Enums.Seriousness.CASUAL)}">
+                                            😎&nbsp;<g:link params='[subscription:"${subscriptionList[subscriptionList.topic.name.indexOf(it.name)].id}" ,newSerVal: "${link_sharing.Enums.Seriousness.CASUAL}"]'  method="post" controller="subscriptions" action="modSeriousness" >
+                                            ${link_sharing.Enums.Seriousness.CASUAL}
+                                        </g:link><br>
+                                        </g:if>
+
+                                        <g:if test="${!(subscriptionList[subscriptionList.topic.name.indexOf(it.name)].seriousness==link_sharing.Enums.Seriousness.SERIOUS)}">
+                                            😐&nbsp;<g:link params='[subscription:"${subscriptionList[subscriptionList.topic.name.indexOf(it.name)].id}" ,newSerVal: "${link_sharing.Enums.Seriousness.SERIOUS}"]'  method="post" controller="subscriptions" action="modSeriousness">
+                                            ${link_sharing.Enums.Seriousness.SERIOUS}
+                                        </g:link> <br>
+                                        </g:if>
+
+                                        <g:if test="${!(subscriptionList[subscriptionList.topic.name.indexOf(it.name)].seriousness==link_sharing.Enums.Seriousness.VERY_SERIOUS)}">
+                                            😳&nbsp;<g:link params='[subscription:"${subscriptionList[subscriptionList.topic.name.indexOf(it.name)].id}" ,newSerVal: "${link_sharing.Enums.Seriousness.VERY_SERIOUS}"]'  method="post" controller="subscriptions" action="modSeriousness">
+                                            ${link_sharing.Enums.Seriousness.VERY_SERIOUS}
+                                        </g:link>
+                                        </g:if>
+                                    </div>
+                                </div>
+                            </g:if>
+                            <g:else>
+                                <button class="" type="button" title="You have to be Very Serious for your own topic">
+                                    ${subscriptionList[subscriptionList.topic.name.indexOf(it.name)].seriousness}
                                 </button>
-%{--                                <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">--}%
-
-%{--                                    <g:if test="${!(top.seriousness==link_sharing.Enums.Seriousness.CASUAL)}">--}%
-%{--                                        😎&nbsp;<g:link params='[subscription:"${top.id}" ,newSerVal: "${link_sharing.Enums.Seriousness.CASUAL}"]'  method="post" controller="subscriptions" action="modSeriousness" >--}%
-%{--                                        ${link_sharing.Enums.Seriousness.CASUAL}--}%
-%{--                                    </g:link><br>--}%
-%{--                                    </g:if>--}%
-
-%{--                                    <g:if test="${!(top.seriousness==link_sharing.Enums.Seriousness.SERIOUS)}">--}%
-%{--                                        😐&nbsp;<g:link params='[subscription:"${top.id}" ,newSerVal: "${link_sharing.Enums.Seriousness.SERIOUS}"]'  method="post" controller="subscriptions" action="modSeriousness">--}%
-%{--                                        ${link_sharing.Enums.Seriousness.SERIOUS}--}%
-%{--                                    </g:link><br>--}%
-%{--                                    </g:if>--}%
-
-%{--                                    <g:if params='[ser: "${link_sharing.Enums.Seriousness.VERY_SERIOUS}"]' test="${!(top.seriousness==link_sharing.Enums.Seriousness.VERY_SERIOUS)}">--}%
-%{--                                        😳&nbsp;<g:link params='[subscription: "${top.id}" ,newSerVal: "${link_sharing.Enums.Seriousness.VERY_SERIOUS}"]'  method="post" controller="subscriptions" action="modSeriousness">--}%
-%{--                                        ${link_sharing.Enums.Seriousness.VERY_SERIOUS}--}%
-%{--                                    </g:link>--}%
-%{--                                    </g:if>--}%
-%{--                                </div>--}%
-                            </div>
+                            </g:else>
                         </g:if>
 
                         <g:if test="${user.id==it.createdBy.id}">
@@ -602,10 +632,20 @@
                                 </div>
                             </div>
                         </g:if>
+                        <g:else>
+                            <button class="" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                ${it.visibility}
+                            </button>
+                        </g:else>
+
                         <asset:image src="email.png" class="icon" title="send invitation" alt="invite"></asset:image>
                     <g:if test="${user.id==it.createdBy.id}">
-                        <asset:image src="writing.png" title="edit topic" class="icon" alt="write"></asset:image>
-                        <asset:image src="delete.png" title="delete topic" class="icon" alt="delete"></asset:image>
+                        <g:link params='[topic: "${it.id}"]' controller="topics" action="topicChangeRender">
+                            <asset:image src="writing.png" title="edit topic" class="editTopic icon" alt="write"></asset:image>
+                        </g:link>
+                        <g:link params='[topic: "${it.id}"]' controller="topics" action="deleteConfirmation">
+                            <asset:image src="delete.png" title="delete topic" class="icon" alt="delete"></asset:image>
+                        </g:link>
                     </g:if>
                     </td>
 
@@ -616,5 +656,4 @@
         </form>
     </div>
 </div>
-
 </body>

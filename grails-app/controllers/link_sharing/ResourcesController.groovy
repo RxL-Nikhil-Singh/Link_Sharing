@@ -32,7 +32,7 @@ class ResourcesController {
     }
 
 
-    def saveDocument(def pathTillAsset, MultipartFile file) {
+    def saveDocument(def pathTillAsset, def file) {
             String folder = pathTillAsset + "DocumentResources/"
 
             String orgName = (Math.random()*10000000).toInteger().toString()

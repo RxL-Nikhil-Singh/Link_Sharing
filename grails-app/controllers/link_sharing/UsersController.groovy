@@ -8,12 +8,12 @@ class UsersController {
 
     def home(){
         if(session.user) {
-            redirect(controller:"dashboard", action: "dashboard")
-            flash.message = "Hey ${session.user.firstName}!🙋"
+            session.invalidate()
         }
-        List publicResourceList=Resources.findAllByTopicInList(Topics.findAllByVisibility('PUBLIC'),[sort: "lastUpdated", order: "desc"])
-        Integer size=(publicResourceList.size()<5)?publicResourceList.size():5
-        List publicResourceSubList=publicResourceList.subList(0,size)
+        List publicTopics=Topics.findAllByVisibility('PUBLIC')
+        List publicResourceList=(publicTopics)?Resources.findAllByTopicInList(publicTopics,[sort: "lastUpdated", order: "desc"]):null
+        Integer size=(publicResourceList)?((publicResourceList.size()<5)?publicResourceList.size():5):0
+        List publicResourceSubList=(publicResourceList)?publicResourceList.subList(0,size):null
 
         Map M=new HashMap()
         Double ratingVal=0
@@ -25,8 +25,8 @@ class UsersController {
         }
 
         M=M.sort{it.value}
-         size=(M.size()<5)?M.size():5
-        List topRatedList= Resources.getAll(M.keySet()).reverse().subList(0,size)
+         size=(M.size())?((M.size()<5)?M.size():5):M.size()
+        List topRatedList= (M.keySet())?Resources.getAll(M.keySet()).reverse().subList(0,size):null
 //        List topRatedList= Resources.getAll(M.keySet()).subList(size-6,size-1).reverse()
 
 

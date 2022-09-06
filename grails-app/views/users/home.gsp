@@ -16,7 +16,7 @@
 <nav class="navbar navbar-expand-lg nav nav1" >
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><asset:image src="worldwide.png" id="logo2" alt="LOGO"/></a>
-        <a class="navbar-brand" style="margin-right:50%" href="https://nikhiliitbhu.github.io/Personal_Website/"><asset:image src="LINK-SHARING-4-8-2022.png" alt="" width="160%"/></a>
+        <a class="navbar-brand" style="margin-right:50%" href="http://localhost:7070/users/home"><asset:image src="LINK-SHARING-4-8-2022.png" alt="" width="160%"/></a>
 
         <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="search-box" size="150">

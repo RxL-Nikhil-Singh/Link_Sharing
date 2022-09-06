@@ -54,4 +54,75 @@ class TopicsController {
         redirect(controller: "dashboard",action: "dashboard")
         flash.message="Visibility changed to PUBLIC"
     }
+
+    def deleteConfirmation(){
+        Topics topic=Topics.get(params.topic)
+        render (view:"deleteConfirmation",model:[topic:topic])
+    }
+
+    def deleteTopic(){
+        if(session.user.password!=params.password) {
+            redirect(controller: "dashboard",action: "dashboard")
+            flash.message="Authentication failed, Deletion aborted"
+        }
+        else {
+            Topics topic = Topics.findByName(params.topicName)
+            List subs = (topic) ? Subscriptions.findAllByTopic(topic) : null
+            List resources = (topic) ? Resources.findAllByTopic(topic) : null
+            List rates = (resources) ? Ratings.findAllByResourceInList(resources) : null
+            List reads = (resources) ? Readings.findAllByResourceInList(resources) : null
+
+            rates.each {
+                it.delete(flush: true)
+            }
+            reads.each {
+                it.delete(flush: true)
+            }
+            resources.each {
+                it.delete(flush: true)
+            }
+            subs.each {
+                it.delete(flush: true)
+            }
+            topic.delete(flush: true)
+
+            redirect(controller: "dashboard", view: "dashboard")
+            flash.message = "Content Deletion Successful"
+        }
+    }
+
+
+
+    def abortDeletion(){
+        redirect(controller: "dashboard",action: "dashboard")
+        flash.message="Content Deletion aborted"
+    }
+
+
+    def topicChangeRender(){
+        Topics topic=Topics.get(params.topic)
+        render (view:"topicChange",model:[topic:topic])
+    }
+
+    def topicChange(){
+        Topics topic = Topics.findByName(params.topicName)
+        List allTopics=Topics.list().name
+        if(allTopics.contains(params.newTopicName))
+        {
+            redirect(controller: "dashboard",action: "dashboard")
+            flash.message="Topic already exists, Please use a different name"
+        }
+        else {
+            topic.name = params.newTopicName
+            topic.save(flush: true)
+
+            redirect(controller: "dashboard", view: "dashboard")
+            flash.message = "Topic Changed Successful"
+        }
+    }
+
+    def abortTopicChange(){
+        redirect(controller: "dashboard",action: "dashboard")
+        flash.message="Topic Change aborted"
+    }
 }

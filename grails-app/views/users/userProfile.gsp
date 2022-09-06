@@ -14,7 +14,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><asset:image src="worldwide.png" id="logo2" alt="LOGO"/></a>
         <a class="navbar-brand" style="margin-right:50%"
-           href="https://nikhiliitbhu.github.io/Personal_Website/"><asset:image src="LINK-SHARING-4-8-2022.png" alt=""
+           href="http://localhost:7070/users/home"><asset:image src="LINK-SHARING-4-8-2022.png" alt=""
                                                                                 width="200%"/></a>
 
 

@@ -20,7 +20,8 @@ class DashboardController {
             }
 
                 List finalInbox=Resources.getAll(inboxList)
-
+                Resources x=new DocumentResource()
+                        
             List subscriptionList=Subscriptions.findAllByUser(session.user,[sort:"dateCreated",order:"desc"])
 
             List publicTopicList=Topics.findAllByVisibility('PUBLIC')
@@ -35,6 +36,8 @@ class DashboardController {
 
             Integer size=(M.size()<5)?M.size():5
             List trendingTopics= Topics.getAll(M.keySet()).reverse().subList(0,size)
+//            List subsTrendingTopics=Subscriptions.findAllByTopicInListAndUser(trendingTopics,session.user)
+//            println trendingTopics.size()+" "+subsTrendingTopics.size()
 
             render(view: "dashboard", model: [user: session.user,subscriptionList:subscriptionList,
                                               trendingTopics :trendingTopics,
@@ -44,7 +47,7 @@ class DashboardController {
         }
 
         else{
-            redirect(action: "home")
+            redirect(controller:"users", action: "home")
             flash.message = "Session out ⌛, Please Login!"
         }
     }
