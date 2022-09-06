@@ -1,7 +1,5 @@
 package link_sharing
 
-import org.springframework.web.multipart.MultipartFile
-
 class UsersController {
 //    static scaffold = Users
     static defaultAction = "home"
@@ -10,20 +8,34 @@ class UsersController {
 
     def home(){
         if(session.user) {
-            redirect(action: "dashboard")
+            redirect(controller:"dashboard", action: "dashboard")
             flash.message = "Hey ${session.user.firstName}!🙋"
         }
-        List resourceList=Resources.list(sort:"dateCreated",order:"desc",max:5)
-        List ratedResourceList=Ratings.list(sort:"score",order:"desc",max:5)
-//    render(view:"home")
-        render (view:"home",model:[resList:resourceList,ratedList:ratedResourceList])
+        List publicResourceList=Resources.findAllByTopicInList(Topics.findAllByVisibility('PUBLIC'),[sort: "lastUpdated", order: "desc"])
+        Integer size=(publicResourceList.size()<5)?publicResourceList.size():5
+        List publicResourceSubList=publicResourceList.subList(0,size)
+
+        Map M=new HashMap()
+        Double ratingVal=0
+
+        publicResourceList.each{
+            if(Ratings.findAllByResource(it))
+                ratingVal=Ratings.findAllByResource(it).score.sum()/Ratings.findAllByResource(it).size()
+            M.put(it.id,ratingVal)
+        }
+
+        M=M.sort{it.value}
+         size=(M.size()<5)?M.size():5
+        List topRatedList= Resources.getAll(M.keySet()).reverse().subList(0,size)
+//        List topRatedList= Resources.getAll(M.keySet()).subList(size-6,size-1).reverse()
+
+
+        render (view:"home",model:[resList:publicResourceSubList,topRatedList:topRatedList])
         if(flash.message==null)
             flash.message="Hey🙋, Please Login or Register"
-//        flash.message="Hello 🙋‍, Please Login or Register!"
-//        ,[user:user]
     }
 
-    def savePhoto(MultipartFile file, String username) {
+    def savePhoto(def file, def username) {
         String orgName = file.getOriginalFilename();
             if(!(orgName.contains('.jpg')||orgName.contains('.jpeg')||orgName.contains('.png')))
                 return "defaultProfile.png"
@@ -36,10 +48,7 @@ class UsersController {
 
             String extension = orgName.split("\\.")[1]
             String photoName = username
-//            if (session.user) {
-//                photoName = session.user.email.split("\\.")[0]
-////                photoName = session.user.username
-//            }
+
             String docPath = folder + photoName + "." + extension
             File dest = new File(docPath);
             file.transferTo(dest);
@@ -50,28 +59,11 @@ class UsersController {
     def register(){
 
         Users user = new Users(params)
-//        render(user.photo)
         List<String> usersList=Users.list().username
         List<String> emails=Users.list().eMail
 
-        String pass=params.password
-        boolean smallCase=false,upperCase=false,num=false
-
-        for(i in 0..(pass.size()-1))
-        {
-            if(pass[i]>='a' && pass[i]<='z')
-                smallCase=true;
-            if(pass[i]>='A' && pass[i]<='Z')
-                upperCase=true;
-            if(pass[i]>='0' && pass[i]<='9')
-                num=true;
-        }
-        boolean validator= (num && upperCase && smallCase)
-        if(pass.size()<5)validator=false
-
-//        render(params.profilePic)
         user.photo=savePhoto( params.profilePic,params.username)
-
+        println params.profilePic
         if(usersList.contains(user.username))
         {
             redirect(action:"home")
@@ -82,24 +74,23 @@ class UsersController {
             redirect(action:"home")
             flash.message="Email already registered, Please login!"
         }
-        else if(!validator)
+            else if(user.photo.size()>5120000)
         {
-            redirect(action:"home")
-            flash.message="Password criteria violated, Please retry with a stronger password"
+            redirect(actoin:"home")
+            flash.message="Please reduce photo size below 5MBs"
         }
 
-
-//        render( validator)
-     else if(params.password==params.confirmPassword) {
-
+         if(user.validate())
+        {
             user.save(flush: true, validate: true, failOnError: true)
             redirect (action:"home")
             flash.message="Congrats, you are registered 🤩, Please Login"
         }
-        else {
-            redirect(action:"home")
-            flash.message="Passwords didn't match🥺, Please retry"
-        }
+        else{
+             redirect(actoin:"home")
+             flash.message="Password criteria violated, Please retry with a stronger password"
+         }
+
     }
 
 
@@ -123,7 +114,7 @@ class UsersController {
         {
             session.user=curUser
 //            render session
-            redirect (action: 'dashboard')
+            redirect (controller:"dashboard",action: 'dashboard')
             flash.message=" Hey ${session.user.firstName}, Welcome aboard!"
         }
         else {
@@ -134,26 +125,9 @@ class UsersController {
         }
     }
 
-    def dashboard() {
-
-        if (session.user){
-            List topicList=Subscriptions.findAllByUser(session.user).topic.name
-            List subscriptionList=Subscriptions.findAllByUser(session.user)
-            List inbox=Readings.findAllByUserAndIsRead(session.user,false)
-//            Users curUser=Users.get(session.user)
-//            render curUser
-            render(view: "dashboard", model: [user: session.user,topicList:topicList,subsList:subscriptionList,inbox:inbox])
-        if (flash.message == null)
-            flash.message = "${session.user.firstName} logged in"
-        }
-
-        else{
-                redirect(action: "home")
-                flash.message = "Session out ⌛, Please Login!"
-        }
-    }
 
     def logout(){
+        if(session.user)
         session.invalidate()
         redirect(action:"home")
         flash.message=("Successfully logged out!, See ya!🖐")
@@ -166,7 +140,7 @@ class UsersController {
     }
 
     def post(){
-        render(view:"post")
+        render(view:"/resources/post")
         flash.message="hello vijju"
     }
 
@@ -175,6 +149,17 @@ class UsersController {
     }
 
     def userProfile(){
+        Users user=Users.get(params.user)
+        List publicTopicList=Topics.findAllByCreatedByAndVisibility(user,'PUBLIC')
+        List privateTopicList=Topics.findAllByCreatedByAndVisibility(user,'PRIVATE')
+        List resourceList=Resources.findAllByCreatedByAndTopicInList(user,publicTopicList,[sort: "lastUpdated", order: "desc"])
+//        List subsList=Subscriptions.findAllByUserAndT(user)
+
+        render(view:"userProfile",model:[user:user,resList:resourceList,publicTopicList:publicTopicList,privateTopicList:privateTopicList])
+        flash.message="${user.firstName} ${user.lastName}"
+
 
     }
+
+
 }

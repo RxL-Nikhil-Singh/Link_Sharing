@@ -9,8 +9,8 @@ class Users {
     String password
     static transients=['confirmPassword']
     String confirmPassword
-    boolean activeStatus
-    boolean admin
+    boolean activeStatus=true
+    boolean admin=false
     Date dateCreated
     Date lastUpdated
     String photo
@@ -18,14 +18,23 @@ class Users {
 
     static constraints = {
         username blank: false, unique: true
-        firstName blank: false, nullable: false
         lastName blank: true, nullable: true
 
-        password blank: false, nullable: false, minSize: 5, maxSize: 32
+        password blank: false, nullable: false, minSize: 5, maxSize: 32,validator: {
+            boolean smallCase=false,upperCase=false,num=false
+            for(i in 0..(it.size()-1))
+            {
+                if(it[i]>='a' && it[i]<='z')
+                    smallCase=true;
+                if(it[i]>='A' && it[i]<='Z')
+                    upperCase=true;
+                if(it[i]>='0' && it[i]<='9')
+                    num=true;
+            }
+            (num && upperCase && smallCase)
+        }
 
         eMail email: true,unique: true
-        activeStatus blank: true, nullable: true
-        admin blank: true, nullable: true
         photo nullable: true
     }
 

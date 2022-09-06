@@ -11,28 +11,47 @@ class TopicsController {
     def createTopic() {
         Topics topic = new Topics()
 
-        List<String> allTopics = Topics.list().name
         topic.name = params.name
         if (params.visibility == 'PRIVATE') {
             topic.visibility = 'PRIVATE'
         } else topic.visibility = 'PUBLIC'
         topic.createdBy = session.user
-
+        List allTopics=Users.getAll(session.user.id).topic.name
 
         if (!(allTopics.contains(topic.name))) {
             topic.addToSubs(user: session.user, topic: topic, seriousness: Enums.Seriousness.VERY_SERIOUS)
             topic.save(flush: true, validate: true, failOnError: true)
-            redirect(controller: "Users", action: "dashboard")
+            redirect(controller: "dashboard", action: "dashboard")
             flash.message = "Topic '${topic.name}' created Successfully"
         } else {
-            redirect(controller: "Users", action: "dashboard")
+            redirect(controller: "dashboard", action: "dashboard")
             flash.message = "Topic '${topic.name}' already exists, Please choose a different topic name"
         }
     }
 
     def topicShow(){
-        List topicList=Topics.list()
-        render(view:"topicShow",model:[user:session.user,topicList:topicList])
-        flash.message="Hey ${session.user.firstName}, Explore the world here!"
+        Topics topic=Topics.get(params.topic)
+        Users user=Users.get(params.user)
+        List Resource=Resources.findAllByTopic(topic,[sort:"dateCreated",order:"desc"])
+        print Resource.description+"   "
+//        render topic.name
+        render(view:"topicShow",model:[user:user,topic:topic,Resource:Resource])
+        flash.message="${topic.name}"
+    }
+
+    def pvtVisibility(){
+        Topics topic=Topics.get(params.topic)
+        topic.visibility=Enums.Visibility.PRIVATE
+        topic.save(flush:true,validate:true,failOnError:true)
+        redirect(controller: "dashboard",action: "dashboard")
+        flash.message="Visibility changed to PRIVATE"
+    }
+
+    def pubVisibility(){
+        Topics topic=Topics.get(params.topic)
+        topic.visibility=Enums.Visibility.PUBLIC
+        topic.save(flush:true,validate:true,failOnError:true)
+        redirect(controller: "dashboard",action: "dashboard")
+        flash.message="Visibility changed to PUBLIC"
     }
 }

@@ -5,10 +5,12 @@
     <meta name="layout" content="LinkSharingLayout" />
     <asset:link rel="icon" href="home.png" type="image/x-ico"/>
     <title>Home</title>
+    <asset:stylesheet src="application.css"/>
+    <asset:stylesheet src="bootstrap.css"/>
+    <asset:stylesheet src="bootstrap.min.css"/>
 </head>
 
 <body class="homeBody">
-
 
 
 <nav class="navbar navbar-expand-lg nav nav1" >
@@ -27,9 +29,9 @@
 
 
 
-<div class="container-fluid col-6 scroller" id="recentSearches" >
+<div class="container-fluid col-6 customContainer scroller" id="recentSearches" >
 
-    <table class="customTable  customContainer " >
+    <table class="customTable   " >
         <thead class="">
         <th class="customHead thead-hover hover-dark">Recent Searches</th>
 
@@ -39,27 +41,29 @@
 
 
         <g:each in="${resList}">
-            <g:if test="${it.topic.visibility==link_sharing.Enums.Visibility.PUBLIC}">
             <tr class="hover-dark">
 
                 <td>
                 <div  class="container-fluid">
-                    <asset:image src="ProfilePictures/${it.createdBy.photo}" class="img1" alt="profile pic"></asset:image>
-
+                <g:link  controller="users" action="home" method="post" >
+                    <asset:image name="userProfile" src="ProfilePictures/${it.createdBy.photo}"  class="img1" alt="profile pic"></asset:image>
+                </g:link>
                     <strong>${it.createdBy.firstName}&nbsp; ${it.createdBy.lastName} </strong>
-                    <a href="" style="font-weight:normal; ">@${it.createdBy.username}</a>
-                    <a href="" style="font-weight:normal;position:absolute;right:3rem;">${it.topic.name}</a>
+                    <g:link controller="users" action="home" method="post" >
+                        ${it.createdBy.username}
+                    </g:link>
+                    <g:link controller="users" action="home" method="post" style="font-weight:normal;position:absolute;right:3rem;">
+                        ${it.topic.name}</g:link>
 
                     <p >${it.description} </p>
                     <asset:image src="facebook.png" class="icon" alt="facebook"></asset:image>
                     <asset:image src="instagram.png" class="icon" alt="instagram"></asset:image>
                     <asset:image src="google.png" class="icon" alt="google"></asset:image>
 
-                    <a href="" class="right-align">view post</a>
                 </div>
                 </td>
             </tr>
-            </g:if>
+
         </g:each>
 
         </tbody>
@@ -76,9 +80,9 @@
 
 <div class="container-fluid col-5 customContainer fieldcontain" id="loginPanel">
     <g:form controller="users" action="login" method="post" target="_self" >
-        <table class="customTable " >
-            <thead class="">
-            <th colspan="2" class="customHead thead-hover hover-dark"><strong>  Login</strong></th>
+        <table class="customTable "  >
+            <thead class="" >
+            <th colspan="2" class="customHead  hover-dark"><strong>  Login</strong></th>
 
 
             </thead>
@@ -91,7 +95,7 @@
                     </label>
                 </td>
                 <td>
-                    <input class="form-control" name="username" type="text" required="required" value=""  />
+                    <input class="form-control" name="username" type="text" required="required" maxlength="64" value=""  />
                 </td>
             </tr>
             <tr class="hover-dark">
@@ -99,13 +103,13 @@
                     <label for="password">Password*</label>
                 </td>
                 <td>
-                    <g:passwordField class="form-control" name="password" type="password" value="" />
+                    <input maxlength="32" class="form-control" name="password" type="password"  value="" />
                 </td>
             </tr>
 
             <tr class="hover-dark" style="height:3rem;">
                 <td>
-                    <a href=""> Forgot Password</a></td>
+                    <g:link > Forgot Password</g:link></td>
             </td>
                 <td>
 
@@ -136,35 +140,35 @@
                     <label for="firstName">First Name *
                     </label>       </td>
                 <td>
-                    <input class="form-control" name="firstName" type="text" value="" required="required"/>
+                    <input class="form-control" name="firstName" type="text" value="" maxlength="255" required="required"/>
 
                 </td>
             </tr>
             <tr class="hover-dark">
                 <td>
                     <label for="lastName">Last name*</label>
-                </td><td> <input required="required" class="form-control" name="lastName" type="text" value="" />
+                </td><td> <input  class="form-control" name="lastName" maxlength="255"  type="text" value="" />
             </td>
             </tr>
 
             <tr class="hover-dark">
                 <td>
                      <label for="eMail" >Email*</label>
-                </td><td><input required="required" class="form-control" name="eMail" type="email" value="" />
+                </td><td><input required="required" class="form-control" name="eMail" maxlength="64"  type="email" value="" />
             </td>
             </tr>
 
             <tr class="hover-dark">
                 <td>
                      <label for="username">Username*</label>
-                </td><td> <input required="required" class="form-control" name="username"  type="text" value="" />
+                </td><td> <input required="required" class="form-control" name="username" maxlength="32"  type="text" value="" />
             </td>
             </tr>
 
             <tr class="hover-dark">
                 <td>
                      <label for="password">Password*</label>
-                </td><td><input required="required" class="form-control" name="password" type="password" value="" placeholder="Criteria: Min 5chars, 1digit, 1uppercase, 1lowercase "/>
+                </td><td><input required="required" class="form-control" name="password" maxlength="32" type="password" value="" placeholder="Criteria: Min 5chars, 1digit, 1uppercase, 1lowercase "/>
             </td>
             </tr>
 
@@ -172,7 +176,7 @@
                 <td>
                      <label for="confirmPassword">Confirm Password*</label>  &nbsp;
 
-                </td><td><input required="required" class="form-control" name="confirmPassword" type="password" value="" />
+                </td><td><input required="required" class="form-control" name="confirmPassword" maxlength="32" type="password" value="" />
             </td>
             </tr>
 
@@ -180,7 +184,6 @@
                 <td>
                     <label for="photo">Photo*</label>
                     <br>upto 5MBs <br> .jpg, .png, .jpeg
-
 
                 </td><td><input type="file"  name="profilePic" class="form-control"  accept=".jpg, .jpeg, .png"/>
 
@@ -205,57 +208,51 @@
 
 
 %{--Top Posts--}%
-<div class="container-fluid col-6 customContainer" id="topPosts" >
-    <form action="" >
+<div class="container-fluid col-6 customContainer scroller" id="topPosts" >
         <table class="customTable " >
             <thead class="">
             <th class="customHead thead-hover hover-dark"><strong >Top Posts</strong>
 
-                <span>
-                    <select class="timeline" name="timline" style="font-size:medium">
-                        <option value="today">Today</option>
-                        <option value="1 week">1 week</option>
-                        <option value="1 month">1 month</option>
-                        <option value="1 year">1 year</option>
-                    </select>
-                </span>
+
             </th>
             </thead>
 
             <tbody>
-            <g:each in="${ratedList}">
-                <g:if test="${it.resource.topic.visibility==link_sharing.Enums.Visibility.PUBLIC}">
+            <g:each in="${topRatedList}">
                     <tr class="hover-dark">
 
                         <td>
                             <div  class="container-fluid">
-                                <asset:image src="ProfilePictures/${it.resource.createdBy.photo}" class="img1" alt="profile pic"></asset:image>
+                                <asset:image src="ProfilePictures/${it.createdBy.photo}" class="img1" alt="profile pic"></asset:image>
 
-                                <strong>${it.resource.createdBy.firstName}&nbsp; ${it.resource.createdBy.lastName} </strong>
-                                <a href="" style="font-weight:normal; ">@${it.resource.createdBy.username}</a>
-                                <a href="" style="font-weight:normal;position:absolute;right:3rem;">${it.resource.topic.name}</a>
+                                <strong>${it.createdBy.firstName}&nbsp; ${it.createdBy.lastName} </strong>
+                                <a href="" style="font-weight:normal; ">@${it.createdBy.username}</a>
+                                <a href="" style="font-weight:normal;position:absolute;right:3rem;">${it.topic.name}</a>
 
-                                <p >${it.resource.description} </p>
+                                <p >${it.description} </p>
                                 <asset:image src="facebook.png" class="icon" alt="facebook"></asset:image>
                                 <asset:image src="instagram.png" class="icon" alt="instagram"></asset:image>
                                 <asset:image src="google.png" class="icon" alt="google"></asset:image>
 
-                                <a href="" class="right-align">view post</a>
                             </div>
                         </td>
                     </tr>
-                </g:if>
             </g:each>
             </tbody>
         </table>
 
-    </form>
+
 </div>
 
 
+<asset:javascript src="application.js"/>
 <asset:javascript src="jquery-3.6.0.js"/>
 <asset:javascript src="jquery-3.2.1.slim.min.js"/>
+<asset:javascript src="bootstrap.js"/>
+<asset:javascript src="bootstrap.min.js"/>
 
-
+<script>
+    $("body").html="hello"
+</script>
 </body>
 </html>

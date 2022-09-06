@@ -21,7 +21,7 @@
 
             <li class="nav-item">
                 <a class="nav-link" title="Create topic" href="#" data-bs-toggle="modal" data-toggle="modal"
-                   data-target="#createTopic">
+                   data-target="#createTopic" id="createTopicIcon">
                     <asset:image src="speech-bubble.png" alt="create topic" class="icon "
                                  style="position:absolute;right:39rem; top:2.5rem;"></asset:image>
                 </a>
@@ -29,21 +29,21 @@
 
             <li class="nav-item">
                 <a class="nav-link" title="Send Invitation" href="#" data-bs-toggle="modal" data-toggle="modal"
-                   data-target="#sendInvitation">
+                   data-target="#sendInvitation" id="sendInvitationIcon">
                     <asset:image src="email.png" alt="send invitation" class="icon"
                                  style="position:absolute;right:36rem; top:2.5rem;"></asset:image>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" title="create link resource" href="#" data-bs-toggle="modal" data-toggle="modal"
-                   data-target="#createLinkResource">
+                   data-target="#createLinkResource" id="createLinkResourceIcon">
                     <asset:image src="link.png" alt="create link resource" class="icon"
                                  style="position:absolute;right:33rem; top:2.5rem;"></asset:image>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" title="create document resource" href="#" data-bs-toggle="modal" data-toggle="modal"
-                   data-target="#createDocumentResource">
+                   data-target="#createDocumentResource" id="createDocumentResourceIcon">
                     <asset:image src="note.png" alt="create document resource" class="icon"
                                  style="position: absolute; right:30rem; top:2.5rem;"></asset:image>
                 </a>
@@ -61,20 +61,22 @@
 
         %{--        //dropdown--}%
         <div class="dropdown">
-            <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false" style="margin:1rem">
+            <button class="btn btn-warning dropdown-toggle" type="button"  data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" style="margin:1rem" id="profileButton">
                 <asset:image src="me.png" class="icon"/> ${user.firstName}
             </button>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="font-weight: bolder">
                 <g:link controller="users" action="editProfile" id=""><asset:image src="me.png"
-                                                                                   class="icon"/>Profile</g:link>
-                <g:link controller="users" action="editProfile" id=""><asset:image src="user.png"
-                                                                                   class="icon"/>Users</g:link>
-                <g:link controller="topics" action="topicShow" id="topicShow"><asset:image src="list.png"
-                                                                                           class="icon"/>Topics</g:link>
-                <g:link controller="users" action="editProfile" id=""><asset:image src="writing.png"
-                                                                                   class="icon"/>Posts</g:link>
+                                                                                   class="icon"/> Profile</g:link>
+                <g:if test="${user.admin}">
+                    <g:link controller="users" action="editProfile" id=""><asset:image src="user.png"
+                                                                                       class="icon"/> Users</g:link>
+                    <g:link controller="topics" action="topicShow" id="topicShow"><asset:image src="list.png"
+                                                                                               class="icon"/> Topics</g:link>
+                    <g:link controller="users" action="editProfile" id=""><asset:image src="writing.png"
+                                                                                       class="icon"/> Posts</g:link>
+                </g:if>
                 <g:link controller="users" action="logout" id="logout">
                     <asset:image src="logout.png" class="icon"/> Logout</g:link>
 

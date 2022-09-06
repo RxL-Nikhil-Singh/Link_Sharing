@@ -81,49 +81,46 @@
             </div>
         </div>
     </div>
-
-
-
 </nav>
 
 
-<div id="universal-div">
+%{--<div id="universal-div">--}%
 
-    <div class="container-fluid col-lg-6 col-md-11 scroller"  >
+    <div class="container-fluid col-6 "  >
 
         <table class="customTable  customContainer" >
             <thead class="">
-            <th class="customHead thead-hover hover-dark" colspan="3"><strong></strong></th>
+            <th class="customHead thead-hover hover-dark" colspan="3"><strong></strong>
+            ${resource.createdBy.firstName} ${resource.createdBy.lastName}
+            </th>
             </thead>
             <tbody class="">
-            <tr class="hover-dark" style="height:"fit-content">
+            <tr class="hover-dark" style="height:fit-content">
 
 
             <td style="width:5rem;" class="">
-                <asset:image class="img1" src="Photograph.jpeg" alt="profile pic"></asset:image>
+                <asset:image class="img1" src="ProfilePictures/${resource.createdBy.photo}" alt="profile pic"></asset:image>
             </td>
             <td>
-                <strong>Nikhil Kumar Singh</strong>
+                <strong>${resource.createdBy.firstName} ${resource.createdBy.lastName}</strong>
                 <br>
-                <a href="" style="font-weight:lighter">&nbsp;@Nikhil</a>
+                <a href="" style="font-weight:lighter">&nbsp;@${resource.createdBy.username}</a>
             </td>
             <td style="text-align:right;">
-                <a href="" > Grails</a>
+                <a href="" > ${resource.topic.name}</a>
                 <br>
                 <span id="date" ></span>
                 <br>
                 star rating goes here
             </td>
-    </div>
+
 </td>
 
 </tr>
     <tr class="hover-dark">
         <td colspan="3">
             <p>
-                HARE KRISHNA HARE KRISHNA KRISHNA KRISHNA HARE HARE
-                HARE RAMA HARE RAMA RAMA RAMA HARE HARE HARE KRISHNA HARE KRISHNA KRISHNA KRISHNA HARE HARE
-                HARE RAMA HARE RAMA RAMA RAMA HARE HARE
+                ${resource.description}
             </p>
         </td>
     </tr>
@@ -146,7 +143,7 @@
 
 </div>
 
-<div class="container-fluid col-5 customContainer trendingTopics "  >
+<div class="container-fluid col-5  trendingTopics "  >
     <form action="">
         <table class="customTable " >
             <thead class="">
@@ -245,6 +242,27 @@
 
     </form>
 </div>
+
+<script>
+
+    n =  new Date();
+    y = n.getFullYear();
+    m = n.getMonth() + 1;
+    d = n.getDate();
+    month = n.toLocaleString('default', { month: 'short' });
+    hours=n.getHours();
+    minutes=n.getMinutes();
+
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    s=n.getSeconds();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    document.getElementById("date").innerHTML = hours+":"+minutes+" "+ampm+", "+d + " " + month + " " + y;
+
+
+</script>
 
 </body>
 </html>

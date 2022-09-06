@@ -4,7 +4,7 @@
 <head>
     <meta name="layout" content="LinkSharingLayout" />
     <asset:link rel="icon" href="me.png" type="image/x-ico"/>
-    <title>user Profile</title>
+    <title> user profile</title>
 </head>
 
 <body>
@@ -19,7 +19,6 @@
 
 
 
-
         <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="search-box"
                    size="150">
@@ -28,21 +27,23 @@
         </form>
 
         %{--        //dropdown--}%
-        <div class="dropdown" >
-            <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false" style="margin:1rem">
-                <asset:image src="me.png" class="icon"/> Krishna
+        <div class="dropdown">
+            <button class="btn btn-warning dropdown-toggle" type="button"  data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" style="margin:1rem" id="profileButton">
+                <asset:image src="me.png" class="icon"/> ${user.firstName}
             </button>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="font-weight: bolder">
                 <g:link controller="users" action="editProfile" id=""><asset:image src="me.png"
                                                                                    class="icon"/> Profile</g:link>
-                <g:link controller="users" action="editProfile" id=""><asset:image src="user.png"
-                                                                                   class="icon"/> Users</g:link>
-                <g:link controller="topics" action="topicShow" id="topicShow"><asset:image src="list.png"
-                                                                                           class="icon"/> Topics</g:link>
-                <g:link controller="users" action="editProfile" id=""><asset:image src="writing.png"
-                                                                                   class="icon"/>Posts</g:link>
+                <g:if test="${user.admin}">
+                    <g:link controller="users" action="editProfile" id=""><asset:image src="user.png"
+                                                                                       class="icon"/> Users</g:link>
+                    <g:link controller="topics" action="topicShow" id="topicShow"><asset:image src="list.png"
+                                                                                               class="icon"/> Topics</g:link>
+                    <g:link controller="users" action="editProfile" id=""><asset:image src="writing.png"
+                                                                                       class="icon"/> Posts</g:link>
+                </g:if>
                 <g:link controller="users" action="logout" id="logout">
                     <asset:image src="logout.png" class="icon"/> Logout</g:link>
 
@@ -54,22 +55,21 @@
 <div id="universal-div">
 
     %{--User Details--}%
-    <div class="container-fluid col-5 scroller" style="position:relative;left:2rem;bottom:46rem;">
+    <div class="container-fluid col-5 scroller" style="position:relative;bottom:11rem;">
 
         <table class="customTable  ">
             <thead class="customHead">
-            <th class="customHead thead-hover hover-dark" colspan="2"><strong>Krishna</strong></th>
+            <th class="customHead thead-hover hover-dark" colspan="2"><strong>${user.firstName} </strong></th>
             </thead>
             <tbody class="">
             <tr class="hover-dark" style="height:fit-content">
                 <td>
-                    <asset:image src="krishna.jpg" alt="profile pic" class="img1"/>
+                    <asset:image src="ProfilePictures/${user.photo}" alt="profile pic" class="img1"/>
 
                 </td>
                 <td style="width:97%">
-                    <h5 style=" display:inline ">Krishna</h5>
+                    <h5 style=" display:inline "> ${user.firstName} ${user.lastName}</h5>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="" style="font-weight:normal;position:absolute;">@Krishna</a>
 
                     <table class="innerTable">
                         <tr>
@@ -78,10 +78,10 @@
                         </tr>
                         <tr>
                             <td class="innerCell"><a href="">
-                                %{--                            ${subsList.size()}--}%
+                            ${user.subscription.size()}
                             </a></td>
                             <td class="innerCell"><a href="">
-                                %{--                            ${topicList.size()}--}%
+                                ${publicTopicList.size()+privateTopicList.size() }
                             </a></td>
                         </tr>
                     </table>
@@ -93,11 +93,11 @@
     </div>
 
 %{--Posts--}%
-<div class="container-fluid col-6 customContainer  bigScroller inbox">
+<div class="container-fluid col-6 customContainer  midScroller inbox">
 
         <table class="customTable ">
             <thead class="">
-            <th class="customHead thead-hover hover-dark"><strong>Posts</strong></th>
+            <th class="customHead thead-hover hover-dark"><strong>Posts of ${user.firstName}</strong></th>
 
             <form class="d-flex" role="search"></form>
             <th class="customHead thead-hover hover-dark">
@@ -112,14 +112,14 @@
             </thead>
             <tbody class="">
 
-            <g:each in="${0..5}">
+            <g:each in="${resList}">
                 <tr class="hover-dark">
                     <td colspan="3">
                         <div style="width:97%" class="">
                             <a href="https://www.instagram.com/alberteinstein/?hl=en"
-                               style="font-weight:bold">&nbsp;Krishna</a>
+                               style="font-weight:bold">&nbsp;${it.topic.name}</a>
 
-                            <p>“Krishna”</p>
+                            <p>“${it.description}”</p>
 
                             <asset:image src="facebook.png" class="icon" alt="facebook"></asset:image>
                             <asset:image src="instagram.png" class="icon" alt="instagram"></asset:image>
@@ -129,7 +129,9 @@
                                 <a href="" style="margin:0 0.2em; position:absolute; right:22rem;">Download</a>
                                 <a href="" style="margin:0 0.2em; position:absolute; right:15rem;">view full site</a>
                                 <a href="" style="margin:0 0.2em; position:absolute; right:8rem;">mark as read</a>
-                                <a href="" style="margin:0 0.2em; position:absolute; right:2rem;">view post</a>
+                <g:link params='[resource: "${it.id}"]' controller="resources" action="post" >
+                    view post
+                    </g:link>
                             </span>
                         </div>
                     </td>
@@ -146,7 +148,7 @@
 
 
 %{--Topics--}%
-<div class="container-fluid col-5 customContainer right-align" style="position:relative;left:2rem;bottom:55rem;">
+<div class="container-fluid col-5 customContainer right-align scroller" style="position:relative;bottom:18rem;">
 
     <table class="customTable ">
         <thead class="customHead">
@@ -155,7 +157,7 @@
         </thead>
 
         <tbody>
-
+            <g:each in="${publicTopicList}">
             <tr class="hover-dark">
 
                 <td style="width:100%;">
@@ -163,56 +165,45 @@
                     <table class="innerTable">
 
                         <tr>
-                            <td class="innerCell"><a href="">Grails</a> </td>
+                            <td class="innerCell">
+                                <g:link params='[topic: "${it.id}"]' controller="topics" action="topicShow"  >
+                                    ${it.name}
+                                </g:link>
                             <td class="innerCell">Subscriptions</td>
                             <td class="innerCell">Post</td>
                         </tr>
                         <tr>
                             <td class="innerCell">
+
+                    <g:if test="${!(user.id==it.createdBy.id)}">
+                                Subscribe
+
+                    </g:if>
+                                <asset:image src="email.png" class="icon" alt="invite"></asset:image><br>
                                 %{--                     %{--        //seriousness--}%
                                 <div class="dropdown buttonMargin">
                                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Seriousness
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#"> 😎 Causual</a>
-                                        <a class="dropdown-item" href="#"> 😐 Serious</a>
-                                        <a class="dropdown-item" href="#">😳 Very Serious</a>
-                                    </div>
-                                </div>
 
-                                <asset:image src="email.png" class="icon" alt="invite"></asset:image>
+
+
+                                <br>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#"> 😎 Causual</a>
+                                    <a class="dropdown-item" href="#"> 😐 Serious</a>
+                                    <a class="dropdown-item" href="#">😳 Very Serious</a>
+                                </div>
+                            </div>
                             </td>
-                            <td class="innerCell"><a href="">50</a></td>
-                            <td class="innerCell"><a href="">30</a></td>
+                            <td class="innerCell"><a href="">${it.subs.size()}</a></td>
+                            <td class="innerCell"><a href="">${it.resource.size()}</a></td>
                         </tr>
                     </table>
 
                     <br>
             </tr>
-
-        <tr class="hover-dark">
-
-            <td style="width:100%;">
-
-                <table class="innerTable">
-
-                    <tr>
-                        <td class="innerCell"><a href="">Grails</a> </td>
-                        <td class="innerCell">Subscriptions</td>
-                        <td class="innerCell">Post</td>
-                    </tr>
-                    <tr>
-                        <td class="innerCell">
-                            <a href="">Subscribe</a>
-                        </td>
-                        <td class="innerCell"><a href="">50</a></td>
-                        <td class="innerCell"><a href="">30</a></td>
-                    </tr>
-                </table>
-
-                <br>
-        </tr>
+            </g:each>
         </tbody>
     </table>
 
@@ -225,7 +216,7 @@
 
 
 %{--Subscriptions--}%
-<div class="container-fluid col-5 customContainer right-align " style="position:relative;left:2rem;bottom:53rem;">
+<div class="container-fluid col-5 customContainer right-align scroller" style="position:relative;bottom:16rem;">
 
         <table class="customTable ">
             <thead class="customHead">
@@ -235,7 +226,7 @@
 
             <tbody>
 
-            <g:each in="${1..2}">
+            <g:each in="${user.subscription}">
             <tr class="hover-dark">
 
                 <td style="width:100%;">
@@ -243,13 +234,12 @@
                     <table class="innerTable">
 
                         <tr>
-                            <td class="innerCell"><a href="">Grails</a> </td>
+                            <td class="innerCell"><a href="">${it.topic.name}</a> </td>
                             <td class="innerCell">Subscriptions</td>
                             <td class="innerCell">Post</td>
                         </tr>
                         <tr>
                             <td class="innerCell">
-                                %{--                     %{--        //seriousness--}%
                                 <div class="dropdown buttonMargin">
                                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Seriousness
@@ -263,7 +253,7 @@
 
                                 <asset:image src="email.png" class="icon" alt="invite"></asset:image>
                             </td>
-                            <td class="innerCell"><a href="">50</a></td>
+                            <td class="innerCell"><a href="">${it.topic}</a></td>
                             <td class="innerCell"><a href="">30</a></td>
                         </tr>
                     </table>

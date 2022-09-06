@@ -28,7 +28,10 @@
 
 </head>
 
-<body style="background-image: url('https://i.pinimg.com/736x/5b/60/2c/5b602c9c7dca8ae2f73dbace8d86f35a.jpg')">
+<body style="background-color:#EFFFFD">
+
+
+
 
 
 

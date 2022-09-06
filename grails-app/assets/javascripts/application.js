@@ -33,28 +33,14 @@ setTimeout( function myFunction() {
     $("#flash").html("");
 },5000)
 
+
 function myFunction2(){
     $("#flash").html("");
 }
 
+
 // $("#createTopic").modal("show")
 document.getElementById("registerPanel").style.display="none"
-
-n =  new Date();
-y = n.getFullYear();
-m = n.getMonth() + 1;
-d = n.getDate();
-month = n.toLocaleString('default', { month: 'short' });
-hours=n.getHours();
-minutes=n.getMinutes();
-
-var ampm = hours >= 12 ? 'PM' : 'AM';
-hours = hours % 12;
-hours = hours ? hours : 12; // the hour '0' should be '12'
-minutes = minutes < 10 ? '0'+minutes : minutes;
-s=n.getSeconds();
-var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-document.getElementById("date").innerHTML = hours+":"+minutes+" "+ampm+", "+d + " " + month + " " + y;
 
 
 function loginFunction(){
